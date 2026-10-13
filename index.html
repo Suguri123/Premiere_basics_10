@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 활용 프리미어 영상편집 기초과정</title>
+    <meta name="description" content="AI를 결합한 가장 스마트하고 빠른 어도비 프리미어 프로 영상편집 기초 강의. 대시보드에서 편리하게 학습하세요!">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <div class="app-container">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="logo">
+                    <span class="logo-icon">Pr</span>
+                    <span class="logo-text" style="white-space: normal; line-height: 1.1;">Adobe Premiere <span class="accent-text" style="font-size: 0.95rem; font-weight: 700; display: block; margin-top: 4px;">Video Editing Basics</span></span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <button class="nav-item active" data-target="hero">
+                            <span class="nav-icon">🏠</span> 소개 및 홈
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item" data-target="ch1" onclick="switchChapter('ch1')">
+                            <span class="nav-icon">🎬</span> 커리큘럼
+                        </button>
+                        <!-- Submenu for Chapters -->
+                        <ul class="sub-nav">
+                            <li><button class="sub-nav-item" onclick="switchChapter('ch1')">1차시: 프리미어 기초 이해</button></li>
+                            <li><button class="sub-nav-item" onclick="switchChapter('ch2')">2차시: AI 활용 오디오·자막 편집</button></li>
+                            <li><button class="sub-nav-item" onclick="switchChapter('ch3')">3차시: AI 활용 편집 실습</button></li>
+                            <li><button class="sub-nav-item" onclick="switchChapter('ch4')">4차시: 템플릿 활용 및 영상 제작</button></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button class="nav-item" data-target="prompt-builder">
+                            <span class="nav-icon">🪄</span> AI 프롬프트 빌더
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item" data-target="shortcuts">
+                            <span class="nav-icon">⌨️</span> 단축키 사전
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-item" data-target="resources">
+                            <span class="nav-icon">📦</span> 실습 자료실
+                        </button>
+                    </li>
+
+
+                    <li>
+                        <button class="nav-item" data-target="ai-qna">
+                            <span class="nav-icon">🤖</span> FAQ 문의게시판
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="theme-toggle-btn" class="btn btn-outline btn-sm btn-block">🌙 다크 모드</button>
+            </div>
+        </aside>
+
+        <!-- Right Main Content Area -->
+        <main class="content-area">
+            <!-- Mobile Toggle Header (Visible only on mobile) -->
+            <header class="mobile-header">
+                <button id="mobile-menu-btn" class="mobile-menu-toggle">☰</button>
+                <div class="logo">
+                    <span class="logo-icon">Pr</span>
+                    <span class="logo-text" style="white-space: normal; line-height: 1.1;">Adobe Premiere <span class="accent-text" style="font-size: 0.85rem; font-weight: 700; display: block; margin-top: 2px;">Video Editing Basics</span></span>
+                </div>
+            </header>
+
+            <!-- 1. Home / Intro Section -->
+            <section id="hero" class="app-section active">
+                <div class="hero-section">
+                    <div class="hero-bg-glow"></div>
+                    <div class="container hero-container">
+                        <div class="hero-content">
+                            <h1 class="hero-title">
+                                AI 활용 
+                                <span class="gradient-text">프리미어 영상편집 기초과정</span>
+                            </h1>
+                            <p class="hero-desc">
+                                프리미어 인터페이스와 컷 편집부터 AI 오디오 편집과 자동 자막,<br>
+                                Adobe Firefly 이미지·비디오 생성, 마스크·키프레임까지 단계별로 익힙니다.<br>
+                                왼쪽 메뉴에서 학습 단계를 클릭해 시작해보세요!
+                            </p>
+                            <div class="hero-cta">
+                                <button class="btn btn-primary btn-lg" onclick="switchChapter('ch1')">강의 커리큘럼 보기</button>
+                                <button class="btn btn-outline btn-lg" onclick="switchSection('resources')">자료실 바로가기</button>
+                            </div>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="video-slider-container">
+                                <!-- Carousel Toggle Button -->
+                                <button id="carousel-toggle-btn" class="carousel-arrow" title="3차시 실습 영상 보기">▶</button>
+                                
+                                <div class="video-slider-viewport">
+                                    <div class="video-slider-track" id="video-slider-track">
+                                        <!-- Slide 1 (Project : 1차시 실습) -->
+                                        <div class="video-slide-item">
+                                            <div class="glass-panel video-preview-card" style="margin: 0;">
+                                                <div class="video-header">
+                                                    <span class="dot red"></span>
+                                                    <span class="dot yellow"></span>
+                                                    <span class="dot green"></span>
+                                                    <span class="video-title">Project : 1차시 실습</span>
+                                                </div>
+                                                <div class="video-screen">
+                                                    <iframe id="main-yt-video-1" width="100%" height="100%" src="https://www.youtube.com/embed/q781CJcfAhA?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Slide 2 (Project : 3차시 실습) -->
+                                        <div class="video-slide-item">
+                                            <div class="glass-panel video-preview-card" style="margin: 0;">
+                                                <div class="video-header">
+                                                    <span class="dot red"></span>
+                                                    <span class="dot yellow"></span>
+                                                    <span class="dot green"></span>
+                                                    <span class="video-title">Project : 3차시 실습</span>
+                                                </div>
+                                                <div class="video-screen">
+                                                    <iframe id="main-yt-video-3" width="100%" height="100%" src="https://www.youtube.com/embed/2um1Ja1VSXM?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <!-- 2. Curriculum Section - Chapter 1 -->
+            <section id="ch1" class="app-section">
+                <div class="container">
+                    <div class="chapter-overview-card glass-panel">
+                        <div class="overview-badge">1차시 개요</div>
+                        <h3>프리미어 영상편집 기초 이해</h3>
+                        <p>프리미어 인터페이스와 기본 컷 편집을 익혀 30초 영상을 완성합니다.</p>
+                        <div class="overview-meta" style="margin-top: 16px;">
+                            <button onclick="toggleSpecsPanel()" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius-sm); font-size: 0.9rem; padding: 8px 16px; cursor: pointer;">
+                                📝 <span>영상 기초 개념 (프레임 레이트, 해상도, 시퀀스)</span> <span id="specs-toggle-icon" style="transition: var(--transition); display: inline-block;">▼</span>
+                            </button>
+                            
+                            <div id="specs-panel" style="display: none; margin-top: 16px; padding: 16px; background: var(--bg-page-deep); border-radius: var(--radius-sm); border: 1.5px solid var(--border-color); font-size: 0.95rem; line-height: 1.6; text-align: left; animation: fadeIn 0.3s ease;">
+                                <div style="margin-bottom: 16px; border-bottom: 1px dashed var(--border-color); padding-bottom: 16px;">
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">🎬 프레임 레이트 (Frame Rate)</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 12px;">1초당 화면에 노출되는 정지 이미지(프레임)의 장수(FPS)입니다. 영화는 24fps, 일반 방송 및 대다수의 유튜브 콘텐츠는 30fps를 표준으로 사용하며, 스포츠나 게임 플레이 같이 부드럽고 역동적인 영상은 60fps를 주로 활용합니다.</span>
+                                    
+                                    <!-- 주요 프레임 레이트 비교 표 -->
+                                    <div style="overflow-x: auto; margin: 12px 0;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; border: 1.5px solid var(--border-color); background: var(--bg-card);">
+                                            <thead>
+                                                <tr style="background: var(--bg-page); border-bottom: 2px solid var(--border-color);">
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 110px; white-space: nowrap;">프레임 레이트</th>
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 180px;">주요 규격 / 정밀 표준</th>
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 220px;">대표 활용 분야</th>
+                                                    <th style="padding: 10px; font-weight: 700; width: 260px;">시각적 특징</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">24 fps</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">영화 표준 규격<br><small style="color: var(--text-muted); font-size: 0.75rem;">(정밀 표준: 23.976 fps)</small></td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">상업 영화, TV 드라마, 감성 뮤직비디오, 영화풍 다큐멘터리 & 인터뷰</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">클래식하고 감성적인 모션 블러(잔상)를 형성하여 영화 특유의 Cinematic Look 연출</td>
+                                                </tr>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">30 fps</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">방송 & 웹 표준<br><small style="color: var(--text-muted); font-size: 0.75rem;">(TV 표준: 29.97 fps)</small></td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">TV 뉴스, 예능 프로그램, 유튜브 비디오, VLOG, 기업 홍보 영상</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">눈에 가장 익숙하고 자연스러운 가독성을 제공하며 범용성이 가장 높은 표준 규격</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">60 fps</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">고프레임 표준<br><small style="color: var(--text-muted); font-size: 0.75rem;">(고주파수 표준: 59.94 / 60 fps)</small></td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">스포츠 중계, 게임 플레이, 액션 영상, 2배속 슬로우 모션 연출 소스</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">끊김 없이 극도로 매끄럽고 현장감이 뛰어나며 역동적인 움직임을 선명하게 전달</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div style="background: var(--bg-page); border-left: 4px solid var(--secondary); padding: 12px; margin-top: 10px; border-radius: var(--radius-sm); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+                                        <strong>💡 프리미어 프로 실무 Tip:</strong> 60fps로 촬영한 영상을 30fps 시퀀스에 배치한 후 속도를 50%로 설정하면, 원본 프레임을 활용한 부드러운 2배 슬로우 모션을 만들 수 있습니다.
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 12px; border-bottom: 1px dashed var(--border-color); padding-bottom: 12px;">
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">📐 해상도 (Resolution)</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 8px;">화면의 정밀함을 결정하는 가로·세로 픽셀의 총 개수(수량)입니다. 기본 FHD(1920x1080), 고품질 4K UHD(3840x2160)가 있으며, 유튜브 쇼츠나 인스타그램 릴스는 가로세로를 돌린 9:16 비율(1080x1920)을 씁니다.</span>
+                                    
+                                    <button onclick="openResolutionVisualizer()" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.85rem; border-radius: var(--radius-sm); margin-top: 8px; margin-bottom: 4px; cursor: pointer;">
+                                        🔍 <span>해상도별 실제 크기 비교 시뮬레이터 보기</span>
+                                    </button>
+
+                                    <!-- 해상도 설명 이미지 자료 -->
+                                    <div style="margin: 12px 0; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; max-width: 576px; background: var(--bg-card);">
+                                        <img src="resolution_guide.png" alt="해상도 설명 자료" style="width: 100%; height: auto; display: block;">
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 16px; border-bottom: 1px dashed var(--border-color); padding-bottom: 16px;">
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">⚙️ 시퀀스 (Sequence)</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 8px;">프리미어 프로 타임라인에서 영상 클립들을 올리고 조립하는 '설계 도면이자 작업 캔버스'입니다. 프로젝트 내부에서 출력할 최종 비디오의 해상도, 화면비율, 프레임 레이트 정보를 종합 규정합니다.</span>
+                                    
+                                    <!-- 시퀀스 설명 이미지 자료 -->
+                                    <div style="margin: 12px 0; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; max-width: 576px; background: var(--bg-card);">
+                                        <img src="sequence_guide.png" alt="시퀀스 설명 자료" style="width: 100%; height: auto; display: block;">
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">🎞️ 디지털 비디오 기본 개념 & 주요 포맷</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 12px;">비디오 파일은 영상과 소리를 담는 ‘상자(Container)’와, 영상과 소리의 용량을 줄이고 다시 재생할 수 있게 만드는 ‘압축 방식(Codec)’이 합쳐진 것입니다.</span>
+                                    
+                                    <strong style="font-size: 0.9rem; display: block; margin-bottom: 4px;">주요 비디오 컨테이너 & 코덱 포맷</strong>
+                                    <div style="overflow-x: auto; margin: 12px 0;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; border: 1.5px solid var(--border-color); background: var(--bg-card);">
+                                            <thead>
+                                                <tr style="background: var(--bg-page); border-bottom: 2px solid var(--border-color);">
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 120px;">포맷 (확장자)</th>
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 180px;">대표 코덱</th>
+                                                    <th style="padding: 10px; font-weight: 700;">특징 및 용도</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">MP4</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">H.264 / HEVC(H.265)</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">뛰어난 압축률과 범용성. 유튜브, 웹 업로드, SNS, 표준 마스터링용 필수 포맷.</td>
+                                                </tr>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">MOV</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">Apple ProRes / H.264</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">애플(Apple) 표준 포맷. ProRes 사용 시 고품질 비압축/최소압축으로 영상 편집/색보정용에 최적화.</td>
+                                                </tr>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">MKV</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">다양한 코덱 지원</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">여러 오디오 트랙과 자막을 포함하기 용이함. 웹 스트리밍 및 보관용(편집용으로는 비추천).</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">AVI</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">Uncompressed / Motion JPEG</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">구형 윈도우 표준 포맷. 압축률이 낮아 용량이 매우 크며, 현재는 제한적으로 사용됨.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div style="background: var(--bg-page); border-left: 4px solid var(--secondary); padding: 12px; margin-top: 10px; border-radius: var(--radius-sm); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+                                        <strong>💡 Tip:</strong> 프리미어 프로에서 편집할 때는 MOV(ProRes) 형식 클립이 컴퓨터 연산 부하가 적어 가장 원활하며, 최종 출력(Export) 시에는 <strong>MP4(H.264)</strong>를 사용하는 것이 표준적입니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clips-grid" id="ch1-clips"></div>
+                </div>
+            </section>
+
+            <!-- Chapter 2 -->
+            <section id="ch2" class="app-section">
+                <div class="container">
+                    <div class="chapter-overview-card glass-panel">
+                        <div class="overview-badge">2차시 개요</div>
+                        <h3>AI 활용 오디오 · 자막 편집</h3>
+                        <p>오디오 볼륨 · 잡음을 다듬고, AI 받아쓰기와 자동 자막 기능으로 영상 편집을 빠르게 완성합니다.</p>
+
+                        <div class="overview-meta" style="margin-top: 16px;">
+                            <button onclick="toggleAudioSpecsPanel()" class="btn btn-outline btn-sm" style="display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius-sm); font-size: 0.9rem; padding: 8px 16px; cursor: pointer;">
+                                🎧 <span>디지털 오디오 기초 개념(포맷, 오디오 트랙)</span> <span id="audio-specs-toggle-icon" style="transition: var(--transition); display: inline-block;">▼</span>
+                            </button>
+                            
+                            <div id="audio-specs-panel" style="display: none; margin-top: 16px; padding: 16px; background: var(--bg-page-deep); border-radius: var(--radius-sm); border: 1.5px solid var(--border-color); font-size: 0.95rem; line-height: 1.6; text-align: left; animation: fadeIn 0.3s ease;">
+                                <div style="margin-bottom: 16px; border-bottom: 1px dashed var(--border-color); padding-bottom: 16px;">
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">🎵 1. 디지털 오디오 기본 개념 & 주요 포맷</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 12px;">오디오 편집을 시작하기 전, 파일 형식과 기본 용어의 차이를 이해하는 것이 중요합니다.</span>
+                                    
+                                    <!-- 주요 오디오 파일 포맷 표 -->
+                                    <strong style="font-size: 0.9rem; display: block; margin-bottom: 4px;">주요 오디오 파일 포맷</strong>
+                                    <div style="overflow-x: auto; margin: 12px 0;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; border: 1.5px solid var(--border-color); background: var(--bg-card);">
+                                            <thead>
+                                                <tr style="background: var(--bg-page); border-bottom: 2px solid var(--border-color);">
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 120px;">포맷</th>
+                                                    <th style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; width: 150px;">구분</th>
+                                                    <th style="padding: 10px; font-weight: 700;">특징 및 용도</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">WAV</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">비압축 (무손실)</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">최고 음질, 용량이 큼. 동영상 편집 및 마스터링용 표준 포맷.</td>
+                                                </tr>
+                                                <tr style="border-bottom: 1.5px solid var(--border-color);">
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">MP3</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">손실 압축</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">파일 용량이 작음. 웹 업로드나 가벼운 가이드 음원에 사용.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color); font-weight: 700; color: var(--primary);">AAC</td>
+                                                    <td style="padding: 10px; border-right: 1.5px solid var(--border-color);">고효율 압축</td>
+                                                    <td style="padding: 10px; color: var(--text-muted);">MP3보다 압축율 대비 음질이 뛰어남. MP4 영상 파일의 기본 오디오 코덱.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <div style="background: var(--bg-page); border-left: 4px solid var(--secondary); padding: 12px; margin-top: 10px; margin-bottom: 16px; border-radius: var(--radius-sm); border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); font-size: 0.9rem;">
+                                        <strong>💡 Tip:</strong> 일반적인 유튜브나 숏폼 영상 편집용으로는 용량이 작고 다루기 편리한 <strong>MP3 형식</strong>을 가장 널리 사용합니다. 음질 손실이 없는 고품질 사운드 작업이 필요한 경우에는 WAV 형식을 활용해 보세요.
+                                    </div>
+                        
+                                    <strong style="font-size: 0.9rem; display: block; margin-bottom: 4px;">핵심 오디오 용어</strong>
+                                    <ul style="color: var(--text-muted); font-size: 0.9rem; margin-left: 20px; margin-bottom: 0;">
+                                        <li style="margin-bottom: 4px;"><strong>샘플 레이트 (Sample Rate):</strong> 1초당 음성을 몇 번 샘플링했는지 나타내는 단위. 비디오 표준은 48kHz (48,000Hz) 입니다.</li>
+                                        <li style="margin-bottom: 4px;"><strong>비트 깊이 (Bit Depth):</strong> 음량 표현의 정밀도. 영상 작업 시 16-bit 또는 24-bit를 주로 사용합니다.</li>
+                                        <li><strong>데시벨 (dB):</strong> 소리의 크기를 나타내는 단위. 프리미어에서는 0dB가 최대치(Peak)이며, 0dB를 넘어가면 소리가 깨지는 찢어짐(Clipping) 현상이 발생합니다.</li>
+                                    </ul>
+                                </div>
+                                
+                                <div style="margin-bottom: 16px; border-bottom: 1px dashed var(--border-color); padding-bottom: 16px;">
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">🎛️ 2. 프리미어 프로 오디오 오버뷰 & 타임라인</strong>
+                                    
+                                    <strong style="font-size: 0.9rem; display: block; margin-top: 12px; margin-bottom: 4px;">오디오 트랙 구조</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 8px;">A1, A2, A3... 형태의 트랙으로 구성됩니다. 일반적으로 아래와 같이 트랙을 구분하여 관리하는 것이 효율적입니다.</span>
+                                    <ul style="color: var(--text-muted); font-size: 0.9rem; margin-left: 20px; margin-bottom: 12px;">
+                                        <li><strong>A1:</strong> 대사(Dialogue)</li>
+                                        <li><strong>A2:</strong> 효과음(SFX)</li>
+                                        <li><strong>A3:</strong> 배경음악(BGM)</li>
+                                    </ul>
+                        
+                                    <strong style="font-size: 0.9rem; display: block; margin-bottom: 4px;">적정 오디오 레벨 기준 (Audio Meter)</strong>
+                                    <span style="color: var(--text-muted); display: block; margin-bottom: 8px;">영상 전체의 소리 균형을 맞추기 위한 기본 dB 목표치입니다.</span>
+                                    <ul style="color: var(--text-muted); font-size: 0.9rem; margin-left: 20px; margin-bottom: 0;">
+                                        <li style="margin-bottom: 4px;"><strong>대사 / 목소리 (Dialogue):</strong> -12dB ~ -6dB (피크가 -6dB를 넘지 않도록 설정)</li>
+                                        <li style="margin-bottom: 4px;"><strong>효과음 (SFX):</strong> -18dB ~ -12dB</li>
+                                        <li><strong>배경음악 (BGM):</strong> -24dB ~ -18dB (목소리가 있을 때) / -12dB 안팎 (음악만 나올 때)</li>
+                                    </ul>
+                                </div>
+                        
+                                <div>
+                                    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">✂️ 3. 핵심 오디오 편집 방법 (실습 내용)</strong>
+                                    
+                                    <ol style="color: var(--text-muted); font-size: 0.9rem; margin-left: 20px; margin-bottom: 0;">
+                                        <li style="margin-bottom: 12px;">
+                                            <strong style="color: var(--text-main);">클립 볼륨 조절하기 (Gain & Keyframe)</strong><br>
+                                            소리가 너무 크거나 작은 경우 볼륨을 기본 조절합니다.
+                                            <ul style="margin-top: 4px; list-style-type: disc;">
+                                                <li><strong>전체 볼륨 조절 (Audio Gain):</strong> 클립 선택 후 단축키 G 입력 -> Set Gain to에 원하는 dB 지정 (또는 Adjust Gain by로 상대값 조절)</li>
+                                                <li><strong>자동 노멀라이즈:</strong> 단축키 G -> Normalize Max Peak to 선택 후 -3dB 지정 시 가장 큰 소리가 -3dB에 맞게 전체 상향/하향 조절됩니다.</li>
+                                                <li><strong>구간 볼륨 조절 (Keyframe):</strong> 펜 툴(P)을 선택하고 트랙의 흰색 볼륨선에 포인트를 찍어 부분적으로 높이거나 낮출 수 있습니다.</li>
+                                            </ul>
+                                        </li>
+                                        <li style="margin-bottom: 12px;">
+                                            <strong style="color: var(--text-main);">페이드 인 / 페이드 아웃 (Fade In / Out)</strong><br>
+                                            음악이 갑자기 끊기지 않고 자연스럽게 시작하거나 끝나도록 설정합니다.
+                                            <ul style="margin-top: 4px; list-style-type: disc;">
+                                                <li><strong>단축키 적용:</strong> 클립 끝부분 선택 후 Ctrl + Shift + D (Mac: Cmd + Shift + D)를 눌러 기본 오디오 전환 효과(Constant Power)를 적용합니다.</li>
+                                                <li><strong>수동 적용:</strong> Effects 패널 -> Audio Transitions -> Crossfade -> Constant Power 효과를 클립의 앞/뒤로 드래그합니다.</li>
+                                            </ul>
+                                        </li>
+                                        <li style="margin-bottom: 12px;">
+                                            <strong style="color: var(--text-main);">잡음 제거 (Essential Sound - Repair)</strong><br>
+                                            에어컨, 팬 소리, 앰프 노이즈 등 배경 잡음을 클릭 몇 번으로 줄일 수 있습니다.
+                                            <ul style="margin-top: 4px; list-style-type: disc;">
+                                                <li>상단 메뉴에서 Essential Sound 패널을 엽니다.</li>
+                                                <li>편집할 오디오 클립을 선택한 뒤 [Dialogue] 버튼을 클릭합니다.</li>
+                                                <li>[Repair] 항목을 활성화하고 Reduce Noise 체크박스를 켭니다.</li>
+                                                <li>슬라이더를 조절하여 목소리의 왜곡 없이 잡음이 제거되는 적정 수준(보통 2~5 사이)을 맞춥니다.</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong style="color: var(--text-main);">덕킹 (Ducking - BGM 자동 조절)</strong><br>
+                                            말소리가 나올 때 배경음악 크기를 자동으로 줄여주는 기능입니다.
+                                            <ul style="margin-top: 4px; list-style-type: disc;">
+                                                <li>말소리 클립들을 선택 후 Essential Sound 패널에서 <strong>[Dialogue]</strong>로 지정합니다.</li>
+                                                <li>배경음악 클립을 선택 후 <strong>[Music]</strong>으로 지정합니다.</li>
+                                                <li>Music 설정 항목 중 [Ducking] 체크박스를 활성화합니다.</li>
+                                                <li><strong>[Generate Keyframes]</strong>를 클릭하면 말소리 위치에 맞춰 BGM 볼륨 키프레임이 자동으로 생성됩니다.</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clips-grid" id="ch2-clips"></div>
+                </div>
+            </section>
+
+            <!-- Chapter 3 -->
+            <section id="ch3" class="app-section">
+                <div class="container">
+                    <div class="chapter-overview-card glass-panel">
+                        <div class="overview-badge">3차시 개요</div>
+                        <h3>AI 활용 편집 실습</h3>
+                        <p>키프레임과 마스크를 익히고, Firefly로 만든 AI 영상으로 시네마틱 인트로를 제작합니다.</p>
+
+                    </div>
+                    <div class="clips-grid" id="ch3-clips"></div>
+                </div>
+            </section>
+
+            <!-- Chapter 4 -->
+            <section id="ch4" class="app-section">
+                <div class="container">
+                    <div class="chapter-overview-card glass-panel">
+                        <div class="overview-badge">4차시 개요</div>
+                        <h3>템플릿 활용 및 영상 제작</h3>
+                        <p>템플릿과 생성형 확장, Firefly 배경음악 · 음성을 활용해 AI 4컷 비디오를 숏폼 영상으로 완성합니다.</p>
+
+                    </div>
+                    <div class="clips-grid" id="ch4-clips"></div>
+                </div>
+            </section>
+
+            <!-- 3. Prompt Builder Section -->
+            <section id="prompt-builder" class="app-section">
+                <div class="container">
+                    <div class="glass-panel prompt-builder-container">
+                        <div class="prompt-builder-header">
+                            <span class="badge badge-cyan">Adobe Firefly 연동 팁</span>
+                            <h2>AI 이미지 & 비디오 프롬프트 메이커</h2>
+                            <p class="section-subtitle">버튼 클릭 몇 번으로 비주얼 생성에 최적화된 프롬프트나 BGM 생성용 텍스트를 조합해 보세요!</p>
+                        </div>
+
+                        <!-- 탭 버튼 영역 -->
+                        <div class="builder-tabs" style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
+                            <button class="tab-btn active" data-tab="single-scene" onclick="switchBuilderTab('single-scene')" style="background: none; border: none; font-size: 1.1rem; font-weight: 700; color: var(--secondary); cursor: pointer; padding: 8px 16px; position: relative;">🎬 단일 장면 프롬프트</button>
+                            <button class="tab-btn" data-tab="audio-prompt" onclick="switchBuilderTab('audio-prompt')" style="background: none; border: none; font-size: 1.1rem; font-weight: 700; color: var(--text-muted); cursor: pointer; padding: 8px 16px; position: relative;">🎵 오디오 & BGM 생성기</button>
+                        </div>
+                        
+                        <!-- 단일 장면 프롬프트 탭 -->
+                        <div id="single-scene-tab" class="tab-content active">
+                            <div class="prompt-grid">
+                                <div class="prompt-controls">
+                                    <div class="control-group">
+                                        <label>1. 피사체/주제 (Subject)</label>
+                                        <select id="prompt-subject">
+                                            <option value="안개 낀 새벽 숲 속의 오솔길">🌲 안개 낀 새벽 숲 속의 오솔길 (신비로움)</option>
+                                            <option value="해질녘 네온사인이 하나둘 켜지는 사이버펑크 도시 거리">🌆 해질녘 네온사인 도시 거리 (시티팝/사이버펑크)</option>
+                                            <option value="드넓은 우주 공간 속에서 천천히 자전하며 빛나는 푸른 지구">🌍 우주 속 자전하는 지구 (SF/장엄)</option>
+                                            <option value="은은한 스탠드 조명이 켜진 유럽풍 서재와 흔들의자">📚 아늑한 서재 (학습/평화)</option>
+                                            <option value="거대한 폭포가 쏟아져 내리는 에메랄드빛 깊은 계곡">🌊 폭포와 계곡 (대자연)</option>
+                                            <option value="끝없는 모래사막 위로 붉은 태양이 떠오르는 장엄한 풍경">🏜️ 모래사막과 일출 (장엄/황량)</option>
+                                            <option value="미래 도시의 마천루 사이를 소리 없이 가르는 하이테크 플라잉 카">🛸 미래 도시 비행 (SF/하이테크)</option>
+                                            <option value="비 내리는 날 유리창 너머로 김이 피어오르는 머그잔 and 고요한 카페 내부">☕ 비 오는 날 카페 (감성/힐링)</option>
+                                            <option value="네온 조명 아래 헤드폰을 쓰고 리듬을 타며 미소 짓는 DJ">🎧 리듬 타는 DJ (인물/사이버펑크)</option>
+                                            <option value="따스한 햇살이 내리쬐는 창가에서 평화롭게 낮잠을 자는 아기 고양이">🐱 창가에서 낮잠 자는 아기 고양이 (동물/감성)</option>
+                                            <option value="안개 자욱한 숲속을 고요하고 우아하게 걸어가는 신비로운 하얀 사슴">🦌 안개 숲 속의 신비로운 흰 사슴 (동물/신비)</option>
+                                            <option value="우주복을 입고 거친 달 표면을 천천히 도보하는 우주비행사의 뒷모습">🧑‍🚀 달 표면을 걷는 우주비행사 (인물/SF)</option>
+                                            <option value="바람에 휘날리는 머리카락을 매만지며 카메라를 향해 환하게 미소 짓는 여성">👤 미소 짓는 여성 프로필 (인물/포트레이트)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label>2. 스타일 (Style)</label>
+                                        <div class="option-chips" id="prompt-style-chips">
+                                            <span class="chip active" data-val="영화 스틸컷 (시네마틱 아나모픽 렌즈)">영화 스틸컷 (시네마틱)</span>
+                                            <span class="chip" data-val="3D 옥테인 렌더링 일러스트 (Octane render 3D)">3D 옥테인 렌더</span>
+                                            <span class="chip" data-val="사이버펑크 미래 지향적 네온 아트">사이버펑크 아트</span>
+                                            <span class="chip" data-val="부드러운 파스텔 수채화 감성">파스텔 수채화</span>
+                                            <span class="chip" data-val="하이퍼 리얼리스틱 포토그래픽 실사">포토그래픽 실사</span>
+                                            <span class="chip" data-val="레트로 80년대 필름 카메라 질감 (Vintage 85mm film)">빈티지 필름 질감</span>
+                                            <span class="chip" data-val="판타지 컨셉 아트 일러스트">판타지 컨셉아트</span>
+                                            <span class="chip" data-val="미니멀 일러스트 및 벡터 아트">미니멀 벡터아트</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label>3. 카메라 무브먼트/구도 (Camera)</label>
+                                        <div class="option-chips" id="prompt-camera-chips">
+                                            <span class="chip active" data-val="카메라가 천천히 전진하는 피사체 밀착 트래킹 슬로우 줌인">밀착 트래킹 줌인</span>
+                                            <span class="chip" data-val="하늘 높이 비행하며 시야가 넓어지는 초고화질 드론 항공 촬영 뷰">초고화질 드론 항공뷰</span>
+                                            <span class="chip" data-val="바닥에서 위를 올려다보며 웅장함을 극대화하는 로우 앵글 웜즈 아이 뷰">웜즈아이 로우앵글</span>
+                                            <span class="chip" data-val="좌에서 우로 시선이 자연스럽게 쓸고 지나가는 수평 180도 패닝 샷">수평 180도 패닝</span>
+                                            <span class="chip" data-val="역동적인 피사체 추적 핸드헬드 쉐이키 캠 효과">핸드헬드 쉐이키캠</span>
+                                            <span class="chip" data-val="피사체를 정중앙에 둔 시네마틱 시메트리 대칭 구도">시네마틱 대칭구도</span>
+                                            <span class="chip" data-val="깊은 아웃포커싱이 적용된 극도의 초근접 매크로 클로즈업">초근접 매크로 렌즈</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label>4. 분위기 & 색감 (Mood)</label>
+                                        <div class="option-chips" id="prompt-mood-chips">
+                                            <span class="chip active" data-val="따뜻하고 감성적인 주황빛 햇살이 내리쬐는 웜톤">따뜻한 석양 빛</span>
+                                            <span class="chip" data-val="차갑고 신비로운 새벽녘의 짙은 안개와 푸른빛">새벽녘 푸른 안개</span>
+                                            <span class="chip" data-val="네온사인이 반사되는 몽환적인 드림라이크 비주얼">몽환적 드림라이크</span>
+                                            <span class="chip" data-val="일몰 직전의 드라마틱한 명암 대비를 선사하는 골든 아워">드라마틱 골든아워</span>
+                                            <span class="chip" data-val="차갑고 쓸쓸한 비 오는 날의 그레이시 모노톤">비 오는 날 모노톤</span>
+                                            <span class="chip" data-val="미래 도시의 밤을 수놓는 화려한 홀로그램 스펙트럼 라이팅">홀로그램 스펙트럼</span>
+                                            <span class="chip" data-val="안개 낀 숲 사이로 내리쬐는 환상적인 틴달 효과 빛내림">환상적인 빛내림(God rays)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="prompt-output-box">
+                                    <div class="output-header">완성된 Firefly 프롬프트</div>
+                                    <textarea id="prompt-result">안개 낀 새벽 숲, 시네마틱, 카메라가 천천히 전진하는 트래킹 샷, 따뜻하고 감성적인 주황빛 햇살, 16:9 비율</textarea>
+                                    <button id="copy-prompt-btn" class="btn btn-purple btn-block">프롬프트 복사하기</button>
+                                    <div class="copy-success-message" id="copy-toast">클립보드에 복사되었습니다!</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- 오디오 & BGM 프롬프트 탭 콘텐츠 -->
+                        <div id="audio-prompt-tab" class="tab-content" style="display: none; animation: fadeIn 0.4s ease;">
+                            <div class="prompt-grid">
+                                <div class="prompt-controls">
+                                    <div class="control-group">
+                                        <label>1. 분위기 및 장르 (Genre & Mood)</label>
+                                        <select id="audio-genre" style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 2px solid var(--border-color); background: var(--bg-card-soft); color: var(--text-main); font-family: inherit;">
+                                            <option value="신비롭고 몽환적인 앰비언트 (Ambient)">🌌 신비롭고 몽환적인 앰비언트</option>
+                                            <option value="긴장감 넘치는 오케스트라 시네마틱 (Cinematic Orchestral)">🎻 긴장감 넘치는 시네마틱 오케스트라</option>
+                                            <option value="경쾌하고 밝은 브이로그 팝 (Vlog Pop/Acoustic)">☀️ 경쾌하고 밝은 브이로그 팝</option>
+                                            <option value="레트로 신스웨이브 사이버펑크 (Synthwave)">🎮 레트로 신스웨이브 사이버펑크</option>
+                                            <option value="잔잔하고 차분한 로파이 비트 (Lo-fi Hip Hop)">☕ 차분한 로파이 힙합 비트</option>
+                                            <option value="강렬하고 에너제틱한 록/메탈 (Energetic Rock/Metal)">🎸 강렬하고 에너제틱한 록/메탈</option>
+                                            <option value="부드럽고 그루비한 무드의 재즈 (Smooth Groovy Jazz)">🎷 부드럽고 그루비한 재즈</option>
+                                            <option value="오싹하고 기괴한 긴장감을 주는 호러 (Creepy Horror)">👻 오싹하고 기괴한 호러</option>
+                                            <option value="빠르고 신나는 일렉트로닉 댄스 (Upbeat EDM)">🕺 신나는 일렉트로닉 댄스 (EDM)</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>2. 사용 악기 및 템포 (Instruments & Tempo)</label>
+                                        <div class="option-chips" id="audio-instrument-chips">
+                                            <span class="chip active" data-val="부드러운 피아노와 첼로, 느린 템포 (Slow tempo)">피아노 & 첼로 (느리게)</span>
+                                            <span class="chip" data-val="강렬한 드럼과 신디사이저, 빠른 템포 (Fast tempo)">신스 & 드럼 (빠르게)</span>
+                                            <span class="chip" data-val="통기타와 가벼운 타악기, 중간 템포 (Mid tempo)">통기타 & 타악기 (중간)</span>
+                                            <span class="chip" data-val="오케스트라 현악기 웅장함, 빌드업 (Build-up)">웅장한 현악기 빌드업</span>
+                                            <span class="chip" data-val="거친 디스토션 기타와 묵직한 베이스, 빠른 템포 (Fast and Heavy)">디스토션 기타 & 베이스 (강하게)</span>
+                                            <span class="chip" data-val="감미로운 색소폰과 콘트라베이스, 리드미컬한 그루브 (Rhythmical groove)">색소폰 & 콘트라베이스 (그루비)</span>
+                                            <span class="chip" data-val="기괴한 오르골 소리와 스산한 앰비언트, 불규칙한 템포 (Irregular tempo)">오르골 & 스산한 효과음 (기괴하게)</span>
+                                            <span class="chip" data-val="통통 튀는 플럭 신스와 강력한 808 베이스, 빠른 댄스 템포 (Upbeat tempo)">플럭 신스 & 808 베이스 (신나게)</span>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>3. 보컬 및 가사 (Vocals & Lyrics)</label>
+                                        <div class="option-chips" id="audio-vocal-chips">
+                                            <span class="chip active" data-val="보컬 없음 (Instrumental only)">보컬 없음 (악기만)</span>
+                                            <span class="chip" data-val="한국어 가사와 보컬 (Korean vocals)">한국어 가사</span>
+                                            <span class="chip" data-val="영어 가사와 보컬 (English vocals)">영어 가사</span>
+                                            <span class="chip" data-val="알 수 없는 몽환적인 외국어 코러스 (Ethereal choir/Foreign vocals)">몽환적인 외국어 코러스</span>
+                                            <span class="chip" data-val="가사 없는 잔잔한 허밍 (Soft humming, no words)">잔잔한 허밍 (가사 없음)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prompt-output-box">
+                                    <div class="output-header">완성된 AI 오디오 프롬프트</div>
+                                    <textarea id="audio-prompt-result">신비롭고 몽환적인 앰비언트, 부드러운 피아노와 첼로, 느린 템포 (Slow tempo), 보컬 없음 (Instrumental only)</textarea>
+                                    <button id="copy-audio-prompt-btn" class="btn btn-purple btn-block">프롬프트 복사하기</button>
+                                    <div class="copy-success-message" id="audio-copy-toast">클립보드에 복사되었습니다!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Shortcuts Section -->
+            <section id="shortcuts" class="app-section">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <span class="section-tag">SHORTCUTS</span>
+                        <h2 class="section-title">자주 쓰는 핵심 단축키 사전</h2>
+                        <p class="section-subtitle">편집 속도를 3배 빠르게 만들어주는 필수 단축키 모음입니다.</p>
+                        <div class="shortcut-search">
+                            <input type="text" id="shortcut-search-input" placeholder="단축키 이름이나 키(e.g., C, V, 확대)를 검색해 보세요...">
+                        </div>
+                    </div>
+                    <div class="shortcuts-grid" id="shortcuts-container"></div>
+                </div>
+            </section>
+
+            <!-- 5. Resources Section -->
+            <section id="resources" class="app-section">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <span class="section-tag">DOWNLOADS</span>
+                        <h2 class="section-title">실습 자료실</h2>
+                        <p class="section-subtitle">강의에 필요한 모든 자료와 템플릿 꾸러미를 무료로 내려받으세요.</p>
+                    </div>
+
+                    <div class="resources-grid">
+                        <div class="resource-card glass-panel">
+                            <div class="resource-icon">📁</div>
+                            <h3>실습 소스팩 A</h3>
+                            <p>청귤청 만들기 영상, 배경음악(오디오)</p>
+                            <span class="resource-badge">1차시 실습 사용</span>
+                            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                <a href="https://github.com/Suguri123/Premiere_basics_09/releases/download/v1.0.0/source_pack_A.zip" class="btn btn-outline download-btn-action" data-pack="소스팩 A" style="text-decoration: none; text-align: center;">다운로드</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-card glass-panel">
+                            <div class="resource-icon">📁</div>
+                            <h3>실습 소스팩 B</h3>
+                            <p>한라산 영상, 색보정 LUT 파일</p>
+                            <span class="resource-badge">1차시 실습 사용</span>
+                            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                <a href="https://github.com/Suguri123/Premiere_basics_09/releases/download/v1.0.0/source_pack_B.zip" class="btn btn-outline download-btn-action" data-pack="소스팩 B" style="text-decoration: none; text-align: center;">다운로드</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-card glass-panel">
+                            <div class="resource-icon">📁</div>
+                            <h3>실습 소스팩 C</h3>
+                            <p>AI 영상 생성, 키프레임 애니메이션, 마스크</p>
+                            <span class="resource-badge">3차시 실습 사용</span>
+                            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                <a href="https://github.com/Suguri123/Premiere_basics_09/releases/download/v1.0.0/source_pack_C.zip" class="btn btn-outline download-btn-action" data-pack="소스팩 C" style="text-decoration: none; text-align: center;">다운로드</a>
+                            </div>
+                        </div>
+
+                        <div class="resource-card glass-panel text-center highlight-resource">
+                            <div class="resource-icon">⌨️</div>
+                            <h3>단축키 정리표 PDF</h3>
+                            <p>강의에 등장하는 모든 단축키 한눈에 보기</p>
+                            <span class="resource-badge">전체 강의 권장</span>
+                            <a href="files/단축키_정리표.html" target="_blank" class="btn btn-purple" style="text-decoration: none; display: inline-block;">PDF 보기 및 저장</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+
+            <section id="ai-qna" class="app-section">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <span class="section-tag">QA BOARD</span>
+                        <h2 class="section-title">FAQ 문의게시판</h2>
+                        <p class="section-subtitle">어도비 프리미어 프로 영상편집 중 궁금한 점을 입력하여 바로 해결하세요!</p>
+                    </div>
+
+                    <div class="qna-workspace-grid">
+                        <!-- Questions Suggestions Sidebar -->
+                        <div class="qna-sidebar glass-panel" style="padding: 20px; height: 560px; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column;">
+                            <!-- 검색창 (질문 찾기 및 입력) -->
+                            <div class="qna-search-wrapper" style="margin-bottom: 16px; border-bottom: 2px solid var(--border-color); padding-bottom: 14px;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; color: var(--text-main);">🔍 질문 찾기</h4>
+                                <div style="display: flex; gap: 8px; max-width: 240px;">
+                                    <input type="text" id="chat-input-textarea" placeholder="키워드를 입력하세요" style="flex: 1; max-width: 170px; padding: 10px 12px; border: 2.5px solid var(--border-color); border-radius: var(--radius-sm); outline: none; background: var(--bg-page); color: var(--text-main); font-family: var(--font-primary); font-size: 0.9rem; transition: var(--transition);" onkeydown="handleChatInputKeydown(event)" oninput="filterQuickQuestions(this.value)">
+                                    <button id="send-chat-btn" onclick="sendChatMessage()" class="btn btn-purple" style="border-radius: var(--radius-sm); padding: 8px 16px; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; white-space: nowrap;">찾기</button>
+                                </div>
+                            </div>
+
+                            <h4 style="margin-bottom: 12px; font-size: 0.95rem; font-weight: 700; color: var(--text-main); line-height: 1.3;">💡 자주 묻는 질문 <span style="font-size: 0.78rem; font-weight: normal; color: var(--text-muted); display: block; margin-top: 3px;">(클릭 시 자동 전송)</span></h4>
+                            
+                            <!-- Dynamic Categories Container -->
+                            <div id="faq-categories-container" style="display: flex; flex-direction: column; gap: 14px;">
+                                <!-- Will be dynamically populated with 500 questions categorized via app.js -->
+                            </div>
+
+                            <!-- 더보기 텍스트 링크 (외곽 버튼 삭제) -->
+                            <div style="text-align: center; margin-top: 14px; border-top: 1.5px solid var(--border-color); padding-top: 10px;">
+                                <span id="toggle-more-btn" onclick="toggleMoreQuestions()" style="cursor: pointer; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); transition: var(--transition); display: inline-block;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">➕ 자주 묻는 질문 전체보기 (더보기)</span>
+                            </div>
+                        </div>
+
+                        <!-- Chat Console Container -->
+                        <div class="chat-console-card glass-panel">
+                            <div class="chat-header" style="padding: 16px 24px; border-bottom: 2.5px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.5rem;">🤖</span>
+                                    <div>
+                                        <strong style="display: block; font-size: 1.1rem;">Premiere AI 튜터</strong>
+                                        <span style="font-size: 0.8rem; color: var(--text-muted);" id="chat-mode-desc">기본 데모 모드로 작동 중</span>
+                                    </div>
+                                </div>
+                                <button onclick="clearChatHistory()" class="btn btn-outline btn-sm" style="padding: 4px 12px; font-size: 0.85rem; border-radius: var(--radius-sm);">대화 초기화</button>
+                            </div>
+
+                            <div class="chat-messages-container" id="chat-messages" style="height: 480px; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; background: var(--bg-page-deep); border-bottom-left-radius: var(--radius-md); border-bottom-right-radius: var(--radius-md);">
+                                <!-- Welcome Message -->
+                                <div class="chat-msg ai-msg">
+                                    <div class="avatar">🤖</div>
+                                    <div class="msg-bubble-wrapper">
+                                        <div class="msg-bubble">
+                                            안녕하세요! 프리미어 기초 과정을 수강 중인 여러분을 돕기 위해 준비된 <strong>FAQ 문의게시판 AI 튜터</strong>입니다. <br><br>
+                                            좌측 상단에 질문을 입력해 검색하시거나 바로 엔터를 쳐 질문할 수 있으며, 자주 묻는 목록을 클릭해 즉시 답변을 확인해 보세요.
+                                        </div>
+                                        <span class="msg-time" id="welcome-msg-time">오전 08:49</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- Footer inside main area -->
+            <footer>
+                <div class="container footer-container">
+                    <div class="footer-left">
+                        <div class="logo">
+                            <span class="logo-icon">Pr</span>
+                            <span class="logo-text" style="line-height: 1.1;">Adobe Premiere <span class="accent-text" style="font-size: 0.95rem; font-weight: 700; display: block; margin-top: 4px;">Video Editing Basics</span></span>
+                        </div>
+                        <p>본 페이지는 어도비 프리미어 영상편집 기초 과정 교육생들을 위해 제작된 학습 보조 웹사이트입니다.</p>
+                    </div>
+                    <div class="footer-right">
+                        <p>&copy; 2026 <a href="https://www.youtube.com/@myjejuisland" target="_blank" rel="noopener noreferrer">@myjejuisland</a> Hyunsook Lee. All rights reserved.</p>
+                        <p>Adobe, Premiere Pro, and Firefly are trademarks of Adobe Inc.</p>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Toast Notification for Downloads -->
+    <div id="download-toast" class="toast"></div>
+
+    <!-- Resolution Visualizer Modal -->
+    <div id="res-modal" class="res-modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+        <div class="res-modal-content glass-panel" style="background: var(--bg-card); border: 2.5px solid var(--border-color); width: 95%; max-width: 950px; padding: 24px; border-radius: var(--radius-md); box-shadow: 0 20px 50px rgba(0,0,0,0.15); position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="closeResolutionVisualizer()" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: var(--transition);">&times;</button>
+            
+            <h3 style="margin-bottom: 8px; font-size: 1.5rem;">📐 해상도별 크기 비교 시뮬레이터 (8K & DCI 4K 포함)</h3>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;">
+                8K UHD부터 영화 표준인 DCI 4K, UHD, FHD, HD, SD 해상도의 실제 비율을 중첩 비례 시뮬레이터로 느껴 보세요. <br>
+                <strong>[100% 픽셀 실제 크기 비교]</strong> 버튼을 누르면 화면 축소 없이 모니터 1:1 리얼 크기 스크롤 뷰가 열립니다.
+            </p>
+            
+            <!-- Comparison Simulator Viewport -->
+            <div style="background: var(--bg-page-deep); border: 2px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 420px; margin-bottom: 20px; position: relative; overflow: hidden;">
+                <!-- 8K Base Container (Base wrapper scaled down) -->
+                <div style="width: 100%; max-width: 768px; aspect-ratio: 16/9; background: #0f172a; border: 3px solid #ef4444; border-radius: 4px; position: relative; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                    <span style="position: absolute; bottom: 12px; right: 12px; color: #ef4444; font-weight: bold; font-size: 0.85rem; background: rgba(15,23,42,0.85); padding: 4px 10px; border-radius: 4px; border: 1px solid #ef4444; z-index: 1;">8K UHD (7680 x 4320)</span>
+                    
+                    <!-- DCI 4K (Cinema 1.9:1) Container -->
+                    <div style="width: 53.33%; height: 50%; background: rgba(168, 85, 247, 0.1); border-bottom: 3px solid #a855f7; border-right: 3px solid #a855f7; position: absolute; left: 0; top: 0; display: flex; flex-direction: column; z-index: 8;">
+                        <span style="position: absolute; bottom: 10px; right: 10px; color: #a855f7; font-weight: bold; font-size: 0.75rem; background: rgba(15,23,42,0.85); padding: 2px 6px; border-radius: 4px; border: 1px solid #a855f7;">DCI 4K Cinema (4096 x 2160)</span>
+                    </div>
+
+                    <!-- 4K UHD Container -->
+                    <div style="width: 50%; height: 50%; background: #1e293b; border-bottom: 3px solid #38bdf8; border-right: 3px solid #38bdf8; position: absolute; left: 0; top: 0; display: flex; flex-direction: column; z-index: 5;">
+                        <span style="position: absolute; bottom: 10px; right: 10px; color: #38bdf8; font-weight: bold; font-size: 0.8rem; background: rgba(15,23,42,0.85); padding: 2px 8px; border-radius: 4px; border: 1px solid #38bdf8; z-index: 6;">4K UHD (3840 x 2160)</span>
+                        
+                        <!-- Full HD Container -->
+                        <div style="width: 50%; height: 50%; background: #0f172a; border-bottom: 3px solid #10b981; border-right: 3px solid #10b981; position: absolute; left: 0; top: 0; display: flex; flex-direction: column; z-index: 4;">
+                            <span style="position: absolute; bottom: 10px; right: 10px; color: #10b981; font-weight: bold; font-size: 0.75rem; background: rgba(15,23,42,0.85); padding: 2px 8px; border-radius: 4px; border: 1px solid #10b981; z-index: 5;">Full HD (1920 x 1080)</span>
+                            
+                            <!-- HD Container -->
+                            <div style="width: 66.66%; height: 66.66%; background: #1e1b4b; border-bottom: 2.5px solid #f59e0b; border-right: 2.5px solid #f59e0b; position: absolute; left: 0; top: 0; display: flex; flex-direction: column; z-index: 3;">
+                                <span style="position: absolute; bottom: 8px; right: 8px; color: #f59e0b; font-weight: bold; font-size: 0.7rem; background: rgba(30,27,75,0.85); padding: 2px 6px; border-radius: 4px; border: 1px solid #f59e0b; z-index: 4;">HD (1280 x 720)</span>
+                                
+                                <!-- SD Container -->
+                                <div style="width: 56.25%; height: 66.66%; background: #311042; border-bottom: 2px solid #ec4899; border-right: 2px solid #ec4899; position: absolute; left: 0; top: 0; display: flex; align-items: center; justify-content: center; z-index: 2;">
+                                    <span style="color: #ec4899; font-weight: bold; font-size: 0.65rem; text-align: center; background: rgba(49,16,66,0.85); padding: 2px 4px; border-radius: 4px; border: 1px solid #ec4899;">SD (720x480)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
+                <button onclick="toggleRealSizeOverlay()" class="btn btn-purple btn-sm" style="border-radius: var(--radius-sm);">🖥️ 100% 픽셀 실제 크기 비교 보기</button>
+                <button onclick="closeResolutionVisualizer()" class="btn btn-outline btn-sm" style="border-radius: var(--radius-sm);">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 100% Pixel Overlay for actual scale representation -->
+    <div id="real-size-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.96); z-index: 2500; overflow: auto; padding: 40px;">
+        <!-- Close overlay button -->
+        <button onclick="toggleRealSizeOverlay()" style="position: fixed; top: 20px; right: 20px; z-index: 2600; padding: 12px 24px; font-weight: bold; border-radius: 30px; background: #ef4444; color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(239,68,68,0.4);">실제 크기 모드 종료</button>
+        
+        <div style="color: white; margin-bottom: 24px; font-family: var(--font-primary); position: fixed; top: 20px; left: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); max-width: 600px; z-index: 2600;">
+            <h3 style="margin-bottom: 4px;">🖥️ 100% 픽셀 매칭 실제 크기 시뮬레이션 (8K & DCI 4K 포함)</h3>
+            <p style="font-size: 0.9rem; color: #cbd5e1; margin: 0; line-height: 1.4;">
+                아래 영역들은 화면 축소 없이 모니터 픽셀 1:1 해상도로 직접 구현된 상자입니다.<br>
+                가로/세로 스크롤을 끝없이 이동해 보며 거대한 해상도의 스케일을 직접 체감해 보세요!
+            </p>
+        </div>
+
+        <div style="margin-top: 80px; position: relative;">
+            <!-- 100% 8K Box -->
+            <div style="width: 7680px; height: 4320px; border: 4px dashed #ef4444; background: rgba(239, 68, 68, 0.01); position: relative; border-radius: 8px;">
+                <div style="position: absolute; top: 20px; left: 20px; background: #ef4444; color: white; padding: 8px 16px; font-weight: bold; border-radius: 4px; font-size: 1.1rem; z-index: 10;">8K UHD 실제 프레임 크기 (7680 x 4320)</div>
+                
+                <!-- 100% DCI 4K Box (Positioned absolutely inside 8K) -->
+                <div style="width: 4096px; height: 2160px; border: 4px dashed #a855f7; background: rgba(168, 85, 247, 0.02); position: absolute; left: 0; top: 0; z-index: 8;">
+                    <div style="position: absolute; bottom: 60px; right: 20px; background: #a855f7; color: white; padding: 8px 16px; font-weight: bold; border-radius: 4px; font-size: 1.1rem;">DCI 4K Cinema 실제 프레임 크기 (4096 x 2160)</div>
+                </div>
+
+                <!-- 100% 4K Box -->
+                <div style="width: 3840px; height: 2160px; border: 4px dashed #38bdf8; background: rgba(56, 189, 248, 0.03); position: absolute; left: 0; top: 0; z-index: 7;">
+                    <div style="position: absolute; bottom: 20px; right: 20px; background: #38bdf8; color: #0f172a; padding: 8px 16px; font-weight: bold; border-radius: 4px; font-size: 1.1rem;">4K UHD 실제 프레임 크기 (3840 x 2160)</div>
+                    
+                    <!-- 100% Full HD Box -->
+                    <div style="width: 1920px; height: 1080px; border: 4px dashed #10b981; background: rgba(16, 185, 129, 0.05); position: absolute; left: 0; top: 0;">
+                        <div style="position: absolute; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 8px 16px; font-weight: bold; border-radius: 4px; font-size: 1.1rem;">Full HD 실제 프레임 크기 (1920 x 1080)</div>
+                        
+                        <!-- 100% HD Box -->
+                        <div style="width: 1280px; height: 720px; border: 4px dashed #f59e0b; background: rgba(245, 158, 11, 0.07); position: absolute; left: 0; top: 0;">
+                            <div style="position: absolute; bottom: 20px; right: 20px; background: #f59e0b; color: white; padding: 6px 12px; font-weight: bold; border-radius: 4px; font-size: 1rem;">HD 실제 프레임 크기 (1280 x 720)</div>
+                            
+                            <!-- 100% SD Box -->
+                            <div style="width: 720px; height: 480px; border: 4px dashed #ec4899; background: rgba(236, 72, 153, 0.09); position: absolute; left: 0; top: 0; display: flex; align-items: center; justify-content: center;">
+                                <div style="background: #ec4899; color: white; padding: 6px 12px; font-weight: bold; border-radius: 4px; font-size: 0.9rem;">SD 실제 프레임 크기 (720 x 480)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <p class="lightbox-hint">이미지를 클릭하면 화면이 닫힙니다.</p>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="확대 이미지" />
+    </div>
+
+    <!-- JS -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var players = [];
+        function onYouTubeIframeAPIReady() {
+            ['main-yt-video-1', 'main-yt-video-3'].forEach(function(id) {
+                players.push(new YT.Player(id, {
+                    events: {
+                        'onReady': function(event) {
+                            event.target.setVolume(30);
+                        }
+                    }
+                }));
+            });
+        }
+    </script>
+    <script src="qa_database.js?v=16"></script>
+    <script src="app.js?v=16"></script>
+</body>
+</html>
